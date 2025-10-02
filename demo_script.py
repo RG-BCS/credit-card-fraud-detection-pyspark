@@ -5,7 +5,6 @@ This script trains two logistic regression models using PySpark on a highly imba
 credit card fraud dataset. One model is unweighted, the other uses class weights to address 
 imbalance. It uses Spark ML Pipelines, and evaluation is done via AUC and sklearn metrics.
 
-Author: [Your Name]
 """
 
 from pyspark.sql import SparkSession
@@ -28,15 +27,16 @@ def create_spark_session():
 
 def load_and_prepare_data(spark):
     """
-    Loads the CSV data, cleans it, and returns the DataFrame with the 'label' column.
-    
-    Args:
-        spark (SparkSession): The active Spark session.
-    
-    Returns:
-        DataFrame: Cleaned Spark DataFrame with 'label' column.
+    Tries to load data from Kaggle path, then local fallback path.
     """
-    df = spark.read.csv("/kaggle/input/creditcardfraud/creditcard.csv", header=True, inferSchema=True)
+    kaggle_path = "/kaggle/input/creditcardfraud/creditcard.csv"
+    local_path = "data/creditcard_sample.csv"  # Make sure this exists in your repo
+
+    path = kaggle_path if os.path.exists(kaggle_path) else local_path
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"Dataset not found at {kaggle_path} or {local_path}")
+
+    df = spark.read.csv(path, header=True, inferSchema=True)
     df = df.withColumn("label", col("Class").cast("integer")).drop("Class")
     return df.na.drop()
 
