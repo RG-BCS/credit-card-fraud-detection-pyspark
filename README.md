@@ -68,7 +68,7 @@ The dataset is from Kaggle’s [Credit Card Fraud Detection](https://www.kaggle.
  ```bash
      python demo_script.py
      demo.ipynb
-     
+ ```    
 ---
 
 ## Results
