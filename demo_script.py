@@ -30,7 +30,7 @@ def load_and_prepare_data(spark):
     Tries to load data from Kaggle path, then local fallback path.
     """
     kaggle_path = "/kaggle/input/creditcardfraud/creditcard.csv"
-    local_path = "data/creditcard_sample.csv"  # Make sure this exists in your repo
+    local_path = "creditcard_sample.csv"  # Make sure this exists in your repo
 
     path = kaggle_path if os.path.exists(kaggle_path) else local_path
     if not os.path.exists(path):
