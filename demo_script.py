@@ -16,7 +16,7 @@ from pyspark.ml import Pipeline
 
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classification_report
 import matplotlib.pyplot as plt
-
+import os
 
 def create_spark_session():
     """
